@@ -5,7 +5,9 @@ A bank account management system where the user can create and manage salary acc
 
 ## Superclass
 Name: BankAccount
+
 Shared fields: _accountNumber_, _accountHolder_, and _balance_.
+
 Shared methods:
 * deposit(amount) - deposits money into the account.
 * withdraw(amount) - withdraws money from the account.
@@ -21,7 +23,9 @@ _CreditAccount_ - an account that allows a negative balance up to a specified cr
 
 ## Interface
 Name: _Transferable_
+
 Method: transferTo(BankAccount targetAccount, double amount)  transfers an amount from the account to another account.
+
 Implemented by: SalaryAccount and SavingsAccount.
 
 ## Menu
@@ -36,8 +40,11 @@ Implemented by: SalaryAccount and SavingsAccount.
 ## Error Scenarios
 
 The user enters letters instead of a numeric amount when making a deposit or withdrawal. The program displays an error message and allows the user to try again.
+
 The user attempts to deposit or withdraw an amount that is zero or negative. The program rejects the transaction and explains that the amount must be greater than zero.
+
 The user attempts to withdraw more than the available balance from a salary or savings account, or exceed the credit limit on a credit account. The program rejects the withdrawal without changing the balance.
+
 The user enters an account number that does not exist when making a transfer. The program displays an error message without transferring any money.
 
 # Design Rationale
