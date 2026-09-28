@@ -31,7 +31,7 @@ Implemented by: SalaryAccount and SavingsAccount.
 ## Menu
 1. Create account
 2. List all accounts
-3. Find account by account number
+3. Check balance by account number
 4. Deposit money
 5. Withdraw money
 6. Transfer money
