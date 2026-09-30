@@ -20,55 +20,74 @@ public class BankMenu {
                 """);
 
         int choice = 0;
-        boolean validChoice = false;
+        boolean validChoice = false;                           // Tracks whether the menu input is a valid choice.
 
-        while (!validChoice) {                       // Keep asking until user made a valid choice
+        while (!validChoice) {                                 // Repeat the prompt until the input is valid.
             System.out.print("Choose an option: ");
             String input = scanner.nextLine();
 
-            try {
+            try {                                             // Try to convert the user's text input into an integer.
                 choice = Integer.parseInt(input);
-                validChoice = true;
-            } catch (NumberFormatException e) {
+
+                if (choice >= 1 && choice <= 7) {
+                    validChoice = true;
+                } else {
+                    System.out.println("Choose a number from 1 to 7.");
+                }
+            } catch (NumberFormatException e) {             // Handle input that cannot be converted into an integer.
                 System.out.println("Please enter a number.");
             }
         }
 
         switch (choice) {
-            case 1:
-                System.out.print("[Thank you for choosing Bank GBG!] \nPlease enter your name: ");
-                String name = scanner.nextLine();
-                if (name.isBlank()) {
-                    System.out.println("Name cannot be blank!");
-                } else {
-                    System.out.println("Welcome, " + name);
+            case 1: {
+                System.out.println("[Thank you for choosing Bank GBG!]");
+
+                String name;
+                do {                                        // Ask for a name at least once before checking it.
+                    System.out.print("Please enter your name: ");
+                    name = scanner.nextLine();
+
+                    if (name.isBlank()) {
+                        System.out.println("Name cannot be blank. Please try again.");
+                    }
+                } while (name.isBlank());                   // Repeat the name prompt while the name is blank.
+                System.out.println("Welcome, " + name);
+
+                boolean validAccountType = false;        // Tracks whether the user chose an account type from the list.
+                while (!validAccountType) {              // Repeat the account type prompt until the choice is valid.
                     System.out.println("""
-                            1. - Salary account
-                            2. - Savings account
-                            3. - Credit account""");
-                    System.out.print("Choose your account type you want to create: ");
+                            Choose an account type:
+                            1. Salary account
+                            2. Savings account
+                            3. Credit account
+                            """);
+                    System.out.print("Choose an option: ");
                     String accountTypeInput = scanner.nextLine();
-                    switch (accountTypeInput) {
+
+                    switch (accountTypeInput) {            // Select an action based on the account type entered.
                         case "1":
                             System.out.println("Salary account selected");
+                            validAccountType = true;
                             break;
                         case "2":
                             System.out.println("Savings account selected");
+                            validAccountType = true;
                             break;
                         case "3":
                             System.out.println("Credit account selected");
+                            validAccountType = true;
                             break;
                         default:
-                            System.out.println("Invalid account type.");
+                            System.out.println("Invalid account type. Please choose 1, 2, or 3.");
                             break;
                     }
                 }
                 break;
-
-            default:
+            }
+            default:                                // Handle input that does not match any listed account type.
                 System.out.println("Invalid choice.");
                 break;
         }
-
     }
 }
