@@ -48,6 +48,7 @@ public class BankMenu {
                     System.out.println("[Thank you for choosing Bank GBG!]");
 
                     String name;
+
                     do {                                        // Ask for a name at least once before checking it.
                         System.out.print("Please enter your name: ");
                         name = scanner.nextLine();
@@ -110,6 +111,16 @@ public class BankMenu {
                     }
                     break;
                 }
+                case 2:
+                    if (accounts.isEmpty()) {                   // Display information for every account in the list.
+                        System.out.println("No accounts have been created yet.");
+                    } else {
+                        for (BankAccount account : accounts) {
+                            account.showInfo();
+                            System.out.println();
+                        }
+                    }
+                    break;
                 case 7:
                     System.out.println("Bye!");
                     running = false;
