@@ -121,6 +121,45 @@ public class BankMenu {
                         }
                     }
                     break;
+
+                case 4: {
+                    System.out.print("Enter account number: ");
+                    String accountNumberInput = scanner.nextLine();
+
+                    BankAccount selectedAccount = null;             // null means that no matching account has been found yet.
+                    for (BankAccount account : accounts) {          // Search the account list for the entered account number.
+                        if (account.getAccountNumber().equals(accountNumberInput)) {
+                            selectedAccount = account;
+                            break;                                  // Stop searching after finding the account.
+                        }
+                    }
+                    if (selectedAccount == null) {                   // Tell the user if the account number was not found.
+                        System.out.println("Account not found.");
+                    } else {
+                        boolean depositCompleted = false;           // Keep asking until a deposit succeeds.
+
+                        while (!depositCompleted) {
+                            System.out.print("Enter deposit amount: ");
+                            String amountInput = scanner.nextLine();
+
+                            try {
+                                double amount = Double.parseDouble(amountInput);
+
+                                if (selectedAccount.deposit(amount)) {
+                                    System.out.println("Deposit successful.");
+                                    depositCompleted = true;
+                                } else {
+                                    System.out.println("Amount must be greater than zero. Please try again.");
+                                }
+                            } catch (NumberFormatException e) {
+                                                                // Handle input that cannot be converted to a number.
+                                System.out.println("Please enter a valid number. Try again.");
+                            }
+                        }
+
+                    }
+                    break;
+                }
                 case 7:
                     System.out.println("Bye!");
                     running = false;
