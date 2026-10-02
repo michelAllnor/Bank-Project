@@ -135,7 +135,7 @@ public class BankMenu {
                     if (selectedAccount == null) {                  // Check whether the search found an account.
                         System.out.println("Account not found!");
                     } else {                                        // Display the account details when the account is found.
-                        System.out.println("*************************"+"\n* Account number: " + selectedAccount.getAccountNumber());
+                        System.out.println("*************************" + "\n* Account number: " + selectedAccount.getAccountNumber());
                         System.out.println("* Balance: " + selectedAccount.getBalance() + " kr" + "\n*************************");
                     }
                     break;
@@ -144,8 +144,8 @@ public class BankMenu {
                 case 4: {
                     System.out.print("Enter account number: ");
                     String accountNumberInput = scanner.nextLine();
-
                     BankAccount selectedAccount = null;             // null means that no matching account has been found yet.
+
                     for (BankAccount account : accounts) {          // Search the account list for the entered account number.
                         if (account.getAccountNumber().equals(accountNumberInput)) {
                             selectedAccount = account;
@@ -170,10 +170,49 @@ public class BankMenu {
                                 } else {
                                     System.out.println("Amount must be greater than zero. Please try again.");
                                 }
-                            } catch (NumberFormatException e) {     // Handle input that cannot be converted to a number.
+                            } catch (
+                                    NumberFormatException e) {     // Handle input that cannot be converted to a number.
                                 System.out.println("Please enter a valid number. Try again.");
                             }
                         }
+                    }
+                    break;
+                }
+
+                case 5: {
+                    System.out.print("Enter account number: ");
+                    String accountNumberInput = scanner.nextLine();
+                    BankAccount selectedAccount = null;
+
+                    for (BankAccount account : accounts) {
+                        if (account.getAccountNumber().equals(accountNumberInput)) {
+                            selectedAccount = account;
+                            break;
+                        }
+                    }
+                    if (selectedAccount == null) {
+                        System.out.println("Account not found.");
+                    } else {
+                        boolean withdrawalCompleted = false;
+                        while (!withdrawalCompleted) {
+                            System.out.print("Enter withdrawal amount: ");
+                            String amountInput = scanner.nextLine();
+
+                            try {
+                                double amount = Double.parseDouble(amountInput);
+
+                                if (selectedAccount.withdraw(amount)) {
+                                    System.out.println("Withdrawal successful.");
+                                    withdrawalCompleted = true;
+                                } else {
+                                    System.out.println("Amount must be greater than zero and must not exceed the available balance.");
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Please enter a valid number. Try again.");
+                            }
+
+                        }
+
                     }
                     break;
                 }
