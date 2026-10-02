@@ -202,7 +202,8 @@ public class BankMenu {
                                 double amount = Double.parseDouble(amountInput);
 
                                 if (selectedAccount.withdraw(amount)) {
-                                    System.out.println("Withdrawal successful.");
+                                    System.out.println("Withdrawal successful. Remaining balance: "
+                                            + selectedAccount.getBalance() + "kr");
                                     withdrawalCompleted = true;
                                 } else {
                                     System.out.println("Amount must be greater than zero and must not exceed the available balance.");
