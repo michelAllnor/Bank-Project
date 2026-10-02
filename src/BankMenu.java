@@ -48,7 +48,6 @@ public class BankMenu {
                     System.out.println("[Thank you for choosing Bank GBG!]");
 
                     String name;
-
                     do {                                        // Ask for a name at least once before checking it.
                         System.out.print("Please enter your name: ");
                         name = scanner.nextLine();
@@ -112,15 +111,35 @@ public class BankMenu {
                     break;
                 }
                 case 2:
-                    if (accounts.isEmpty()) {                   // Display information for every account in the list.
+                    if (accounts.isEmpty()) {                   // If not one account is created.
                         System.out.println("No accounts have been created yet.");
                     } else {
-                        for (BankAccount account : accounts) {
+                        for (BankAccount account : accounts) {      // Display the created accounts.
                             account.showInfo();
                             System.out.println();
                         }
                     }
                     break;
+
+                case 3: {
+                    System.out.print("Enter account number: ");
+                    String accountNumberInput = scanner.nextLine();
+
+                    BankAccount selectedAccount = null;             // Stores the matching account, if one is found.
+                    for (BankAccount account : accounts) {          // Search the account list.
+                        if (account.getAccountNumber().equals(accountNumberInput)) {
+                            selectedAccount = account;
+                            break;
+                        }
+                    }
+                    if (selectedAccount == null) {                  // Check whether the search found an account.
+                        System.out.println("Account not found!");
+                    } else {                                        // Display the account details when the account is found.
+                        System.out.println("*************************"+"\n* Account number: " + selectedAccount.getAccountNumber());
+                        System.out.println("* Balance: " + selectedAccount.getBalance() + " kr" + "\n*************************");
+                    }
+                    break;
+                }
 
                 case 4: {
                     System.out.print("Enter account number: ");
@@ -151,12 +170,10 @@ public class BankMenu {
                                 } else {
                                     System.out.println("Amount must be greater than zero. Please try again.");
                                 }
-                            } catch (NumberFormatException e) {
-                                                                // Handle input that cannot be converted to a number.
+                            } catch (NumberFormatException e) {     // Handle input that cannot be converted to a number.
                                 System.out.println("Please enter a valid number. Try again.");
                             }
                         }
-
                     }
                     break;
                 }

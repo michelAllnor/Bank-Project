@@ -9,7 +9,7 @@ public class BankAccount {
         this.accountHolder = accountHolder;
         this.balance = 0;
     }
-    public boolean deposit(double amount) {
+    public boolean deposit(double amount) {                 // Add money only when the amount is greater than zero.
         if (amount <= 0) {
             return false;
         }
@@ -21,7 +21,7 @@ public class BankAccount {
     public void showInfo() {
         System.out.println("| " + "Account number: " + accountNumber);
         System.out.println("| " + "Account holder: " + accountHolder);
-        System.out.println("| " + "Balance: " + balance + "\n------------------------------");
+        System.out.println("| " + "Balance: " + balance +"kr"+ "\n------------------------------");
     }
     public double calculateInterest() {
         return 0.0;
