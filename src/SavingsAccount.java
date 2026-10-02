@@ -4,8 +4,7 @@ public class SavingsAccount extends BankAccount {
     }
     @Override
     public double calculateInterest() {
-        double interest = getBalance() * 2 / 100;
-        return interest;
+        return getBalance() * 2 / 100;
     }        // Estimate one year's interest without changing the account balance.
     @Override
     public void showInfo() {
