@@ -184,7 +184,7 @@ public class BankMenu {
                     String accountNumberInput = scanner.nextLine();
                     BankAccount selectedAccount = null;
 
-                    for (BankAccount account : accounts) {
+                    for (BankAccount account : accounts) {          // Search for the account.
                         if (account.getAccountNumber().equals(accountNumberInput)) {
                             selectedAccount = account;
                             break;
@@ -194,12 +194,13 @@ public class BankMenu {
                         System.out.println("Account not found.");
                     } else {
                         boolean withdrawalCompleted = false;
-                        while (!withdrawalCompleted) {
+
+                        while (!withdrawalCompleted) {          // Keep asking until the withdrawal succeeds.
                             System.out.print("Enter withdrawal amount: ");
                             String amountInput = scanner.nextLine();
 
                             try {
-                                double amount = Double.parseDouble(amountInput);
+                                double amount = Double.parseDouble(amountInput);    // Convert the input to a number.
 
                                 if (selectedAccount.withdraw(amount)) {
                                     System.out.println("Withdrawal successful. Remaining balance: "
@@ -208,7 +209,7 @@ public class BankMenu {
                                 } else {
                                     System.out.println("Amount must be greater than zero and must not exceed the available balance.");
                                 }
-                            } catch (NumberFormatException e) {
+                            } catch (NumberFormatException e) {         // Handle input that is not a valid number.
                                 System.out.println("Please enter a valid number. Try again.");
                             }
 
@@ -218,7 +219,7 @@ public class BankMenu {
                     break;
                 }
                 case 7:
-                    System.out.println("Bye!");
+                    System.out.println("Have a good day!");
                     running = false;
                     break;
 
