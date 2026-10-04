@@ -17,7 +17,7 @@ public class BankAccount {
         return true;
     }
     public boolean withdraw(double amount) {
-        return withdraw(0);
+        return withdraw(amount, 0);
     }
     public boolean withdraw(double amount, double minimumBalance) {
         if (amount <= 0 || balance -amount < minimumBalance) {
