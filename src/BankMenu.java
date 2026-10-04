@@ -207,7 +207,7 @@ public class BankMenu {
                                             + selectedAccount.getBalance() + "kr");
                                     withdrawalCompleted = true;
                                 } else {
-                                    System.out.println("Amount must be greater than zero and must not exceed the available balance.");
+                                    System.out.println(selectedAccount.getWithdrawalErrorMessage());
                                 }
                             } catch (NumberFormatException e) {         // Handle input that is not a valid number.
                                 System.out.println("Please enter a valid number. Try again.");

@@ -27,6 +27,10 @@ public class BankAccount {
         return true;
     }
 
+    public String getWithdrawalErrorMessage() {
+        return "Amount must be positive and cannot exceed the available balance.";
+    }
+
     public void showInfo() {
         System.out.println("| " + "Account number: " + accountNumber);
         System.out.println("| " + "Account holder: " + accountHolder);

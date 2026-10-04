@@ -10,6 +10,11 @@ public class CreditAccount extends BankAccount {
         return super.withdraw(amount, -creditLimit);
         }
 
+    @Override
+        public String getWithdrawalErrorMessage() {
+        return "Amount must be positive. Credit balance cannot go below -5000kr";
+    }
+
 
     @Override
     public void showInfo() {
