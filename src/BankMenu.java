@@ -211,6 +211,7 @@ public class BankMenu {
                                     withdrawalCompleted = true;
                                 } else {
                                     System.out.println(selectedAccount.getWithdrawalErrorMessage());
+                                    withdrawalCompleted = true;
                                 }
                             } catch (NumberFormatException e) {         // Handle input that is not a valid number.
                                 System.out.println("Please enter a valid number. Try again.");
