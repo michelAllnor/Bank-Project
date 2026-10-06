@@ -6,6 +6,32 @@ public class BankMenu {
     private ArrayList<BankAccount> accounts = new ArrayList<>();
     private int nextAccountNumber = 1001;                       // Account number starts at 1001
 
+    private void createAccount(String name, String accountTypeInput) {
+        String accountNumber = String.valueOf(nextAccountNumber);
+        BankAccount account;
+        String accountType;
+        switch (accountTypeInput) {
+            case "1":
+                account = new SalaryAccount(accountNumber, name);
+                accountType = "Salary";
+                break;
+            case "2":
+                account = new SavingsAccount(accountNumber, name);
+                accountType = "Savings";
+                break;
+            case "3":
+                account = new CreditAccount(accountNumber, name);
+                accountType = "Credit";
+                break;
+            default:
+                return;
+        }
+        accounts.add(account);
+        nextAccountNumber++;
+        System.out.println(accountType + " account created. -- ACCOUNT NUMBER: "
+                + accountNumber + " --");
+    }
+
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
@@ -69,34 +95,11 @@ public class BankMenu {
                         System.out.print("Choose an option: ");
                         String accountTypeInput = scanner.nextLine();
 
-                        switch (accountTypeInput) {            // Select an action based on the account type entered.
-                            case "1": {
-                                String accountNumber = String.valueOf(nextAccountNumber);  // Unique account number for every salary account
-                                SalaryAccount salaryAccount = new SalaryAccount(accountNumber, name);
-                                accounts.add(salaryAccount);
-                                nextAccountNumber++;
-
-                                System.out.println("Salary account created. -- ACCOUNT NUMBER: " + accountNumber + " --");
-                                validAccountMenuChoice = true;
-                                break;
-                            }
-                            case "2": {
-                                String accountNumber = String.valueOf(nextAccountNumber); // Unique account number for every savings account
-                                SavingsAccount savingsAccount = new SavingsAccount(accountNumber, name);
-                                accounts.add(savingsAccount);
-                                nextAccountNumber++;
-
-                                System.out.println("Savings account created. -- ACCOUNT NUMBER: " + accountNumber + " --");
-                                validAccountMenuChoice = true;
-                                break;
-                            }
+                        switch (accountTypeInput) {
+                            case "1":
+                            case "2":
                             case "3": {
-                                String accountNumber = String.valueOf(nextAccountNumber);  // Unique account number for every credit accoun
-                                CreditAccount creditAccount = new CreditAccount(accountNumber, name);
-                                accounts.add(creditAccount);
-                                nextAccountNumber++;
-
-                                System.out.println("Credit account created. -- ACCOUNT NUMBER: " + accountNumber + " --");
+                                createAccount(name, accountTypeInput);
                                 validAccountMenuChoice = true;
                                 break;
                             }
