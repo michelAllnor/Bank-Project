@@ -6,6 +6,15 @@ public class BankMenu {
     private ArrayList<BankAccount> accounts = new ArrayList<>();
     private int nextAccountNumber = 1001;                       // Account number starts at 1001
 
+    private BankAccount findAccountByNumber(String accountNumber) {
+        for (BankAccount account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return account;
+            }
+        }
+        return null;
+    }
+
     private void createAccount(String name, String accountTypeInput) {
         String accountNumber = String.valueOf(nextAccountNumber);
         BankAccount account;
@@ -31,8 +40,6 @@ public class BankMenu {
         System.out.println(accountType + " account created. -- ACCOUNT NUMBER: "
                 + accountNumber + " --");
     }
-
-
     public void run() {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -128,18 +135,15 @@ public class BankMenu {
                     System.out.print("Enter account number: ");
                     String accountNumberInput = scanner.nextLine();
 
-                    BankAccount selectedAccount = null;             // Stores the matching account, if one is found.
-                    for (BankAccount account : accounts) {          // Search the account list.
-                        if (account.getAccountNumber().equals(accountNumberInput)) {
-                            selectedAccount = account;
-                            break;
-                        }
-                    }
-                    if (selectedAccount == null) {                  // Check whether the search found an account.
+                    BankAccount selectedAccount = findAccountByNumber(accountNumberInput);
+
+                    if (selectedAccount == null) {
                         System.out.println("Account not found!");
-                    } else {                                        // Display the account details when the account is found.
-                        System.out.println("*************************" + "\n* Account number: " + selectedAccount.getAccountNumber());
-                        System.out.println("* Balance: " + selectedAccount.getBalance() + " kr" + "\n*************************");
+                    } else {
+                        System.out.println("*************************"
+                                + "\n* Account number: " + selectedAccount.getAccountNumber());
+                        System.out.println("* Balance: " + selectedAccount.getBalance()
+                                + " kr" + "\n*************************");
                     }
                     break;
                 }
@@ -147,18 +151,13 @@ public class BankMenu {
                 case 4: {
                     System.out.print("Enter account number: ");
                     String accountNumberInput = scanner.nextLine();
-                    BankAccount selectedAccount = null;             // null means that no matching account has been found yet.
 
-                    for (BankAccount account : accounts) {          // Search the account list for the entered account number.
-                        if (account.getAccountNumber().equals(accountNumberInput)) {
-                            selectedAccount = account;
-                            break;                                  // Stop searching after finding the account.
-                        }
-                    }
-                    if (selectedAccount == null) {                   // Tell the user if the account number was not found.
+                    BankAccount selectedAccount = findAccountByNumber(accountNumberInput);
+
+                    if (selectedAccount == null) {
                         System.out.println("Account not found.");
                     } else {
-                        boolean depositCompleted = false;           // Keep asking until a deposit succeeds.
+                        boolean depositCompleted = false;
 
                         while (!depositCompleted) {
                             System.out.print("Enter deposit amount: ");
@@ -173,8 +172,7 @@ public class BankMenu {
                                 } else {
                                     System.out.println("Amount must be greater than zero. Please try again.");
                                 }
-                            } catch (
-                                    NumberFormatException e) {     // Handle input that cannot be converted to a number.
+                            } catch (NumberFormatException e) {
                                 System.out.println("Please enter a valid number. Try again.");
                             }
                         }
