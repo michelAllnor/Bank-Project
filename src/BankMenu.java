@@ -220,6 +220,7 @@ public class BankMenu {
                     System.out.print("Enter the sender's account number: ");
                     String senderNumber = scanner.nextLine();
                     BankAccount senderAccount = findAccountByNumber(senderNumber);
+                    // Find the account that will send the money.
 
                     if (senderAccount == null) {
                         System.out.println("Sender account not found.");
@@ -229,7 +230,8 @@ public class BankMenu {
                     System.out.print("Enter the receiver's account number: ");
                     String receiverNumber = scanner.nextLine();
                     BankAccount receiverAccount = findAccountByNumber(receiverNumber);
-
+                    // Find the account that will receive the money.
+                    // Stop if the receiver account was not found.
                     if (receiverAccount == null) {
                         System.out.println("Receiver account not found.");
                         break;
@@ -240,8 +242,9 @@ public class BankMenu {
 
                     try {
                         double amount = Double.parseDouble(amountInput);
+                        // Use the shared interface to transfer money from the selected account.
                         Transferable transferSource = (Transferable) senderAccount;
-
+                        // The transfer method checks the sender's rules and updates both accounts.
                         if (transferSource.transferTo(receiverAccount, amount)) {
                             System.out.println("Transfer successful.");
                         } else {
