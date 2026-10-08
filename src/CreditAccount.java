@@ -1,4 +1,4 @@
-public class CreditAccount extends BankAccount {
+public class CreditAccount extends BankAccount implements Transferable {
     private double creditLimit = 5000;
 
     public CreditAccount(String accountNumber, String accountHolder) {

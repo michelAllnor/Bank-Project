@@ -4,8 +4,9 @@ import java.util.Scanner;
 public class BankMenu {
 
     private ArrayList<BankAccount> accounts = new ArrayList<>();
-    private int nextAccountNumber = 1001;                       // Account number starts at 1001
+    private int nextAccountNumber = 1001;                       // Account numbers starts at 1001
 
+    // Find and return an account with this account number.
     private BankAccount findAccountByNumber(String accountNumber) {
         for (BankAccount account : accounts) {
             if (account.getAccountNumber().equals(accountNumber)) {
@@ -15,11 +16,12 @@ public class BankMenu {
         return null;
     }
 
+    // Create and save the account type selected by the user.
     private void createAccount(String name, String accountTypeInput) {
         String accountNumber = String.valueOf(nextAccountNumber);
         BankAccount account;
         String accountType;
-        switch (accountTypeInput) {
+        switch (accountTypeInput) {                             // Create the selected account type.
             case "1":
                 account = new SalaryAccount(accountNumber, name);
                 accountType = "Salary";
@@ -35,15 +37,16 @@ public class BankMenu {
             default:
                 return;
         }
-        accounts.add(account);
+        accounts.add(account);      // Save the account and prepare the next account number.
         nextAccountNumber++;
         System.out.println(accountType + " account created. -- ACCOUNT NUMBER: "
                 + accountNumber + " --");
     }
+
     public void run() {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-        while (running) {                                       // Loops the menu
+        while (running) {                                       // Repeat the main menu until the user exits.
             System.out.println("""
                      == Welcome to Bank GBG ==
                     1. Create account
@@ -121,7 +124,7 @@ public class BankMenu {
                     break;
                 }
                 case 2:
-                    if (accounts.isEmpty()) {                   // If not one account is created.
+                    if (accounts.isEmpty()) {                   // Check wether the account list is empty.
                         System.out.println("No accounts have been created yet.");
                     } else {
                         for (BankAccount account : accounts) {      // Display the created accounts.
@@ -134,7 +137,7 @@ public class BankMenu {
                 case 3: {
                     System.out.print("Enter account number: ");
                     String accountNumberInput = scanner.nextLine();
-
+                    // Find the account entered by the user.
                     BankAccount selectedAccount = findAccountByNumber(accountNumberInput);
 
                     if (selectedAccount == null) {
@@ -151,7 +154,7 @@ public class BankMenu {
                 case 4: {
                     System.out.print("Enter account number: ");
                     String accountNumberInput = scanner.nextLine();
-
+                    // Find the account entered by the user.
                     BankAccount selectedAccount = findAccountByNumber(accountNumberInput);
 
                     if (selectedAccount == null) {
@@ -183,41 +186,71 @@ public class BankMenu {
                 case 5: {
                     System.out.print("Enter account number: ");
                     String accountNumberInput = scanner.nextLine();
-                    BankAccount selectedAccount = null;
+                    // Find the account entered by the user.
+                    BankAccount selectedAccount = findAccountByNumber(accountNumberInput);
 
-                    for (BankAccount account : accounts) {          // Search for the account.
-                        if (account.getAccountNumber().equals(accountNumberInput)) {
-                            selectedAccount = account;
-                            break;
-                        }
-                    }
                     if (selectedAccount == null) {
                         System.out.println("Account not found.");
                     } else {
                         boolean withdrawalCompleted = false;
 
-                        while (!withdrawalCompleted) {          // Keep asking until the withdrawal succeeds.
+                        while (!withdrawalCompleted) {
                             System.out.print("Enter withdrawal amount: ");
                             String amountInput = scanner.nextLine();
 
                             try {
-                                double amount = Double.parseDouble(amountInput);    // Convert the input to a number.
+                                double amount = Double.parseDouble(amountInput);
 
                                 if (selectedAccount.withdraw(amount)) {
                                     System.out.println("Withdrawal successful. Remaining balance: "
-                                            + selectedAccount.getBalance() + "kr");
+                                            + selectedAccount.getBalance() + " kr");
                                     withdrawalCompleted = true;
                                 } else {
                                     System.out.println(selectedAccount.getWithdrawalErrorMessage());
                                     withdrawalCompleted = true;
                                 }
-                            } catch (NumberFormatException e) {         // Handle input that is not a valid number.
+                            } catch (NumberFormatException e) {
                                 System.out.println("Please enter a valid number. Try again.");
                             }
-
                         }
-
                     }
+                    break;
+                }
+                case 6: {
+                    System.out.print("Enter the sender's account number: ");
+                    String senderNumber = scanner.nextLine();
+                    BankAccount senderAccount = findAccountByNumber(senderNumber);
+
+                    if (senderAccount == null) {
+                        System.out.println("Sender account not found.");
+                        break;
+                    }
+
+                    System.out.print("Enter the receiver's account number: ");
+                    String receiverNumber = scanner.nextLine();
+                    BankAccount receiverAccount = findAccountByNumber(receiverNumber);
+
+                    if (receiverAccount == null) {
+                        System.out.println("Receiver account not found.");
+                        break;
+                    }
+
+                    System.out.print("Enter transfer amount: ");
+                    String amountInput = scanner.nextLine();
+
+                    try {
+                        double amount = Double.parseDouble(amountInput);
+                        Transferable transferSource = (Transferable) senderAccount;
+
+                        if (transferSource.transferTo(receiverAccount, amount)) {
+                            System.out.println("Transfer successful.");
+                        } else {
+                            System.out.println("Transfer failed. Check the amount and the sender account's balance or credit limit.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Please enter a valid number.");
+                    }
+
                     break;
                 }
                 case 7:

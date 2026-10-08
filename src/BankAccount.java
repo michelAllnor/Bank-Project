@@ -9,6 +9,7 @@ public class BankAccount {
         this.accountHolder = accountHolder;
         this.balance = 0;
     }
+
     public boolean deposit(double amount) {                 // Add money only when the amount is greater than zero.
         if (amount <= 0) {
             return false;
@@ -16,14 +17,28 @@ public class BankAccount {
         balance += amount;
         return true;
     }
+
     public boolean withdraw(double amount) {
         return withdraw(amount, 0);
     }
+
     public boolean withdraw(double amount, double minimumBalance) {
-        if (amount <= 0 || balance -amount < minimumBalance) {
+        if (amount <= 0 || balance - amount < minimumBalance) {
             return false;
         }
         balance -= amount;
+        return true;
+    }
+
+    public boolean transferTo(BankAccount targetAccount, double amount) {
+        if (targetAccount == null || targetAccount == this || amount <= 0) {
+            return false;
+        }
+        if (!withdraw(amount)) {
+            return false;
+        }
+
+        targetAccount.balance += amount;
         return true;
     }
 
@@ -34,8 +49,9 @@ public class BankAccount {
     public void showInfo() {
         System.out.println("| " + "Account number: " + accountNumber);
         System.out.println("| " + "Account holder: " + accountHolder);
-        System.out.println("| " + "Balance: " + balance +"kr"+ "\n------------------------------");
+        System.out.println("| " + "Balance: " + balance + "kr" + "\n------------------------------");
     }
+
     public double calculateInterest() {
         return 0.0;
     }

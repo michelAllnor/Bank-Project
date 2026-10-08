@@ -1,4 +1,4 @@
-public class SalaryAccount extends BankAccount {
+public class SalaryAccount extends BankAccount implements Transferable {
     public SalaryAccount(String accountNumber, String accountHolder) {
         super(accountNumber, accountHolder);
     }
