@@ -1,11 +1,15 @@
 public class SavingsAccount extends BankAccount implements Transferable  {
+    // Create a savings account with the shared account details.
     public SavingsAccount(String accountNumber, String accountHolder) {
         super(accountNumber, accountHolder);
     }
+
+    // Estimate one year's interest at 2% without changing the balance.
     @Override
     public double calculateInterest() {
-        return getBalance() * 2 / 100;             // Estimate one year's interest without changing the account balance.
+        return getBalance() * 2 / 100;
     }
+    // Display the savings account type, interest rate, and account information.
     @Override
     public void showInfo() {
         System.out.println("------------------------------");

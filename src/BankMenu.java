@@ -4,24 +4,15 @@ import java.util.Scanner;
 public class BankMenu {
 
     private ArrayList<BankAccount> accounts = new ArrayList<>();
-    private int nextAccountNumber = 1001;                       // Account numbers starts at 1001
-
-    // Find and return an account with this account number.
-    private BankAccount findAccountByNumber(String accountNumber) {
-        for (BankAccount account : accounts) {
-            if (account.getAccountNumber().equals(accountNumber)) {
-                return account;
-            }
-        }
-        return null;
-    }
+    private int nextAccountNumber = 1001;
 
     // Create and save the account type selected by the user.
     private void createAccount(String name, String accountTypeInput) {
         String accountNumber = String.valueOf(nextAccountNumber);
         BankAccount account;
         String accountType;
-        switch (accountTypeInput) {                             // Create the selected account type.
+        // Choose which account class to create.
+        switch (accountTypeInput) {
             case "1":
                 account = new SalaryAccount(accountNumber, name);
                 accountType = "Salary";
@@ -43,10 +34,22 @@ public class BankMenu {
                 + accountNumber + " --");
     }
 
+    // Find an account by its number, or return null if it is not found.
+    private BankAccount findAccountByNumber(String accountNumber) {
+        for (BankAccount account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return account;
+            }
+        }
+        return null;
+    }
+
+    // Run the menu and handle the user's choices.
     public void run() {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-        while (running) {                                       // Repeat the main menu until the user exits.
+        // Keep showing the main menu until the user exits.
+        while (running) {
             System.out.println("""
                      == Welcome to Bank GBG ==
                     1. Create account
@@ -59,13 +62,13 @@ public class BankMenu {
                     =========================""");
 
             int choice = 0;
-            boolean validChoice = false;                           // Tracks whether the menu input is a valid choice.
-
-            while (!validChoice) {                                 // Repeat the prompt until the input is valid.
+            boolean validChoice = false;
+            // Ask again until the user enters a valid menu number.
+            while (!validChoice) {
                 System.out.print("Choose an option: ");
                 String input = scanner.nextLine();
-
-                try {                                             // Try to convert the user's text input into an integer.
+            // Try to convert the user's text input into an integer.
+                try {
                     choice = Integer.parseInt(input);
 
                     if (choice >= 1 && choice <= 7) {
@@ -74,11 +77,11 @@ public class BankMenu {
                         System.out.println("Choose a number from 1 to 7.");
                     }
                 } catch (
-                        NumberFormatException e) {             // Handle input that cannot be converted into an integer.
+                        NumberFormatException e) {
                     System.out.println("Please enter a number.");
                 }
             }
-
+            // Run the action selected from the main menu.
             switch (choice) {
                 case 1: {
                     System.out.println("[Thank you for choosing Bank GBG!]");
@@ -91,11 +94,11 @@ public class BankMenu {
                         if (name.isBlank()) {
                             System.out.println("Name cannot be blank. Please try again.");
                         }
-                    } while (name.isBlank());                   // Repeat the name prompt while the name is blank.
+                    } while (name.isBlank());
                     System.out.println("Welcome, " + name);
 
-                    boolean validAccountMenuChoice = false;        // Tracks whether the user chose an account type from the list.
-                    while (!validAccountMenuChoice) {              // Repeat the account type prompt until the choice is valid.
+                    boolean validAccountMenuChoice = false;
+                    while (!validAccountMenuChoice) {
                         System.out.println("""
                                  - Choose an account type -
                                 1. Salary account
@@ -104,7 +107,7 @@ public class BankMenu {
                                 4. Back to main menu""");
                         System.out.print("Choose an option: ");
                         String accountTypeInput = scanner.nextLine();
-
+                        // Create the selected account or return to the main menu.
                         switch (accountTypeInput) {
                             case "1":
                             case "2":
@@ -124,10 +127,10 @@ public class BankMenu {
                     break;
                 }
                 case 2:
-                    if (accounts.isEmpty()) {                   // Check wether the account list is empty.
+                    if (accounts.isEmpty()) {
                         System.out.println("No accounts have been created yet.");
                     } else {
-                        for (BankAccount account : accounts) {      // Display the created accounts.
+                        for (BankAccount account : accounts) {
                             account.showInfo();
                             System.out.println();
                         }
@@ -219,8 +222,8 @@ public class BankMenu {
                 case 6: {
                     System.out.print("Enter the sender's account number: ");
                     String senderNumber = scanner.nextLine();
-                    BankAccount senderAccount = findAccountByNumber(senderNumber);
                     // Find the account that will send the money.
+                    BankAccount senderAccount = findAccountByNumber(senderNumber);
 
                     if (senderAccount == null) {
                         System.out.println("Sender account not found.");
