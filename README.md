@@ -49,4 +49,11 @@ The user enters an account number that does not exist when making a transfer. Th
 
 # Design Rationale
 
-To be completed after implementation has started.
+I put shared account data and methods in BankAccount so all account types can reuse them. SalaryAccount, SavingsAccount and CreditAccount inherit from it and add their own rules.
+I use an ArrayList to store the accounts and search for them by account number. 
+The Transferable gives the account types a shared method for transferring money.
+
+At first, I wrote a separate account in several menu options. 
+After feedback, I moved the search into findAccountByNumber. 
+This lets the menu options refuse the same method and avoids repeating the search code.
+
